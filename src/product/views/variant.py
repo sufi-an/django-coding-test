@@ -1,6 +1,12 @@
 from django.views import generic
 from django.views.generic import ListView, CreateView, UpdateView
 
+from django.shortcuts import render,get_object_or_404, redirect
+
+from django.urls import reverse
+from django.http import HttpResponse, HttpResponseRedirect
+
+
 from product.forms import VariantForm
 from product.models import Variant
 
@@ -14,7 +20,7 @@ class BaseVariantView(generic.View):
 
 class VariantView(BaseVariantView, ListView):
     template_name = 'variants/list.html'
-    paginate_by = 10
+    paginate_by = 5
 
     def get_queryset(self):
         filter_string = {}
@@ -34,7 +40,20 @@ class VariantView(BaseVariantView, ListView):
 
 
 class VariantCreateView(BaseVariantView, CreateView):
-    pass
+
+    def post(self, request, *args, **kwargs):
+        # context = self.get_context_data()
+        form = self.form_class(request.POST or None)
+        print(form)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('product:variants'))
+
+        return render(request, self.success_url)
+        
+        
+
+        
 
 
 class VariantEditView(BaseVariantView, UpdateView):
