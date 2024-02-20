@@ -55,7 +55,7 @@ class ProductList(BaseProductView, ListView):
         
         variants = ProductVariant.objects.all()
         context['variants'] = variants
-        paginator = Paginator(products, 2)  
+        paginator = Paginator(products, 4)  
 
         page_number = self.request.GET.get("page",1)
         context['products'] = paginator.get_page(page_number)
@@ -77,7 +77,7 @@ def handle_uploaded_file(f):
         for chunk in f.chunks():
             destination.write(chunk)
 @method_decorator(csrf_exempt, name='dispatch')
-class CreateProductView(generic.TemplateView):
+class CreateProductView(BaseProductView,generic.TemplateView):
     template_name = 'products/create.html'
 
     def get_context_data(self, **kwargs):
@@ -86,18 +86,18 @@ class CreateProductView(generic.TemplateView):
         context['product'] = True
         context['operation_state']=True
         context['variants'] = list(variants.all())
-        product_id = self.request.GET.get("product",'')
-        if product_id:
-            # product = get_object_or_404(Product,id=product_id)
-            product = Product.objects.filter(id=product_id).values().first()
-            print(product)
-            product_variant = ProductVariant.objects.filter(product_id=product['id']).values()
-            product_variant_price = ProductVariantPrice.objects.filter(product_id=product['id']).values()
+        # product_id = self.request.GET.get("product",'')
+        # if product_id:
+        #     # product = get_object_or_404(Product,id=product_id)
+        #     product = Product.objects.filter(id=product_id).values().first()
+        #     print(product)
+        #     product_variant = ProductVariant.objects.filter(product_id=product['id']).values()
+        #     product_variant_price = ProductVariantPrice.objects.filter(product_id=product['id']).values()
 
-            context['base_product']=product
-            context['product_variant']= list(product_variant.all())
-            context['list(product_variant_price']=list(product_variant_price.all())
-            context['operation_state'] = 'edit'
+        #     context['base_product']=product
+        #     context['product_variant']= list(product_variant.all())
+        #     context['list(product_variant_price']=list(product_variant_price.all())
+        #     context['operation_state'] = 'edit'
            
         return context
     
