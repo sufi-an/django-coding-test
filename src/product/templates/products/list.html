@@ -61,7 +61,7 @@
                 <tr>
                     <td>{{product.id}}</td>
                     <td>{{product.title}} <br> Created at : 25-Aug-2020</td>
-                    <td>{{product.description}}</td>
+                    <td>{{product.description}} {{product.sku}}</td>
                     <td>
                         <dl class="row mb-0" style="height: 80px; overflow: hidden" id="variant">
                             {% for variant in product_list %}
@@ -69,6 +69,8 @@
                                 <dt class="col-sm-3 pb-0">
                                     <!-- {{variant.product }}{{product}} -->
                                     {{variant.product_variant_one.variant_title}}
+                                    {{variant.product_variant_two.variant_title}}
+                                    {{variant.product_variant_three.variant_title}}
                                 </dt>
                                 <dd class="col-sm-9">
                                     <dl class="row mb-0">
@@ -87,7 +89,7 @@
                     </td>
                     <td>
                         <div class="btn-group btn-group-sm">
-                            <a href="" class="btn btn-success">Edit</a>
+                            <a href="/product/create/?product={{product.id}}" class="btn btn-success">Edit</a>
                         </div>
                     </td>
                 </tr>

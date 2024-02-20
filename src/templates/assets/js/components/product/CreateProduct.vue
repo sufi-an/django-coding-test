@@ -107,12 +107,9 @@ export default {
     vueDropzone: vue2Dropzone,
     InputTag
   },
-  props: {
-    variants: {
-      type: Array,
-      required: true
-    }
-  },
+  props: ['variants','product_variant_price'],
+//  , 'base_product', 'product_variant_price', 'product_variant','operation_state'
+//  <!-- <create-product :base_product="{{base_product|safe}}" :product_variant_price="{{product_variant_price|safe}}" :product_variant="{{product_variant|safe}}" :operation_state="{{operation_state|safe}}"  :variants="{{variants|safe}}"></create-product> -->
   data() {
     return {
       product_name: '',
@@ -133,6 +130,9 @@ export default {
         headers: {"My-Awesome-Header": "header value"}
       }
     }
+  },
+  setup(props){
+    console.log(props.variants)
   },
   methods: {
     // it will push a new object into product variant
@@ -186,7 +186,7 @@ export default {
         description: this.description,
         product_image: this.images,
         product_variant: this.product_variant,
-        product_variant_prices: this.product_variant_prices
+        product_variant_prices: this.product_variant_price?this.product_variant_price:[]
       }
       console.log(product)
 
@@ -201,8 +201,15 @@ export default {
 
 
   },
+
+    created(){
+
+    },
   mounted() {
-    console.log('Component mounted.')
+    console.log('Component mounted.', this.variants)
+    // console.log(this.base_product,this.product_variant_price,this.product_variant, this.operation_state)
+//     <create-product :base_product="{{base_product}}" :product_variant_price="{{product_variant_price}}" :product_variant="{{product_variant}}" :operation_state="{{operation_state}}"  :variants="{{variants|safe}}"></create-product>
+
   }
 }
 </script>

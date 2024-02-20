@@ -10,7 +10,9 @@
 </div>
 
 <div id="app">
-    <create-product :variants="{{variants|safe}}"></create-product>
+    {{product_variant_price}}
+    <create-product :variants="{{variants|safe}}" :product_variant_price="{{product_variant_price|safe}}"></create-product>
+   
 </div>
 
 {% endblock %}
